@@ -1,0 +1,20 @@
+Buscamos un Arquitecto o Ingeniero Senior con experiencia en sistemas, redes y seguridad que quiera potenciar su carrera en Cloud Computing. Si te apasiona la tecnología, el aprendizaje continuo y los retos de la transformación digital, esta es tu oportunidad para evolucionar y crecer con nosotros.
+Crear diseños y desplegar infraestructuras en la nube: Principalmente en AWS y Azure, para dar apoyo a los equipos de Inteligencia Artificial y Data Technologies de SDG Group.
+Automatización de despliegues: Desarrollar scripts y plantillas de infraestructura como código (IaC) utilizando herramientas como Terraform, AWS CloudFormation o Azure Resource Manager para automatizar el despliegue de recursos en la nube. Uso de Ansible para automatizar el aprovisionamiento y la gestión de los recursos cloud.
+Implementar procesos de GitOps: Para automatizar el despliegue y la gestión de infraestructuras.
+Desarrollo de scripts: Escribir scripts para automatizar tareas repetitivas y gestionar la infraestructura.
+Integración continua y despliegue continuo (CI/CD): Configurar pipelines de CI/CD para asegurarse de que los cambios en la infraestructura se desplieguen de manera eficiente y con mínimas interrupciones.
+Mantenerse actualizado: Con las mejores prácticas y avances tecnológicos en los servicios de la nube.
+Comunicarse con clientes internacionales: Algunos de los cuales requieren fluidez en inglés (nivel intermedio-alto).
+¿Qué te hará triunfar en esta posición?👇
+CFGS en Administración de Sistemas o Desarrollo, Grado en Informática o Telecomunicaciones.
+A partir de 6 años de experiencia en infraestructura tradicional, incluyendo servidores, redes, almacenamiento, virtualización y entornos legacy.
+Conocimientos en administración de sistemas (Linux/Windows), bases de datos y entornos empresariales. Experiencia en seguridad, redes, firewalls, balanceadores de carga.
+Interés y motivación para aprender Cloud y arquitecturas modernas.
+Haber trabajado con técnicas DevOps e IaC (Terraform y/o Ansible) y GitOps (BitBucket, Azure DevOps).
+Nivel de inglés intermedio-alto (tanto hablado como escrito).
+Valoramos también:
+Familiaridad con conceptos como DataOps, Data Observability y Data Mesh.
+Experiencia en consultoría dentro del mundo Data & Analytics
+Cloud & Automatización: Infraestructura, pipelines de datos, operación y monitorización.
+Experiencia en el diseño y despliegue de plataformas de datos en diferentes entornos cloud (Microsoft Azure, AWS o GCP).

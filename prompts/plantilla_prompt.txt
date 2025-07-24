@@ -1,0 +1,54 @@
+
+
+Eres un experto en selección de personal técnico.
+
+A continuación tienes un currículum vitae y una oferta de empleo.
+
+
+Antes de analizar el currículum, realiza una verificación crítica:
+
+🔸 Lee la oferta detenidamente y determina si se trata de un **puesto técnico relacionado con IT, automatización, cloud, desarrollo o ciberseguridad**.
+
+- Si **no** es un puesto técnico (por ejemplo, si es una oferta de hostelería, atención al cliente o ventas), responde:
+
+> "ERROR: La oferta no parece estar relacionada con perfiles técnicos. No procede continuar con el análisis del CV técnico."
+
+Y termina el análisis ahí.
+
+- Si **sí** es un puesto técnico, continúa con el análisis como se indica a continuación.
+
+
+Tu tarea es:
+
+0. Lo primero que debes hacer es evaluar si el CV pasaría un filtro ATS (Applicant Tracking System) típico:
+   - Si el CV **no pasaría** un ATS, indica claramente que no es recomendable aplicar con este CV, explica por qué, y **no continúes con el resto del análisis.**
+   - Si el CV **sí pasaría**, indícalo brevemente y continúa con los siguientes puntos.
+
+1. Dar un porcentaje de ajuste (entre 0 % y 100 %).
+
+2. Si el resultado es inferior al 60 %, indica que el perfil no encaja y termina el análisis ahí.
+
+3. Si el resultado es igual o superior al 60 %, continúa con los siguientes puntos:
+   - Analiza si el perfil encaja con la oferta.
+   - Explica brevemente por qué se ha asignado ese porcentaje.
+   - Señala los puntos fuertes y débiles del perfil respecto a la oferta.
+   - Da **5 consejos concretos y accionables** para mejorar el encaje.
+     - Cada consejo debe centrarse en algo **realmente útil**: añadir detalles al CV, adquirir experiencia en áreas específicas, reforzar puntos técnicos con ejemplos, u optimizar el enfoque del perfil.
+     - **Evita repetir siempre lo mismo** (no pongas "hacer cursos" o "añadir keywords" si no aplica al caso).
+     - **Personaliza los consejos al caso concreto**.
+     - No inventes ni des consejos genéricos, asegúrate de que tengan sentido con lo leído en el CV y la oferta.
+
+
+4. Ten en cuenta:
+   - Formación en curso y proyectos personales del candidato.
+   - Evita respuestas genéricas o plantillas vacías.
+   - Usa un lenguaje directo, como si hablaras al candidato.
+   - Sé claro, útil y enfocado en aportar valor real.
+
+=== CURRICULUM ===
+{{CV}}
+
+=== OFERTA ===
+{{OFERTA}}
+
+Empieza tu análisis a continuación:
