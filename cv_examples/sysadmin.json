@@ -1,0 +1,40 @@
+{
+  "nombre": "Carlos Ruiz",
+  "titulo": "Administrador de Sistemas Junior",
+  "resumen_bullets": [
+    "Administración básica de Linux y Windows Server",
+    "Automatización con Bash y Python para tareas recurrentes",
+    "Monitorización inicial (Prometheus node exporter, logs del sistema)",
+    "Buenas prácticas de backup y hardening básico"
+  ],
+  "experiencia": [
+    {
+      "empresa": "Consultora IT Alfa",
+      "pais": "Valencia",
+      "puesto": "Sysadmin Junior",
+      "fecha": "2024–Actual",
+      "logros": [
+        "Automatización de backups con scripts Bash y rotación semanal",
+        "Inventario de servicios y documentación de procedimientos",
+        "Soporte a usuarios y mantenimiento de cuentas/grupos"
+      ]
+    }
+  ],
+  "educacion": [
+    {
+      "titulo": "CFGS Administración de Sistemas Informáticos en Red (ASIR)",
+      "centro": "IES Serpis",
+      "fecha": "2022–2024",
+      "estado": "Finalizado"
+    }
+  ],
+  "skills": ["Linux", "Windows Server", "Bash", "Python", "Redes básicas", "SSH", "Git", "Servicios (nginx, samba)"],
+  "idiomas": ["Español (Nativo)", "Inglés (B1)"],
+  "email": "carlos.ruiz@example.com",
+  "web": "gitlab.com/carlos-sys",
+  "ciudad": "Valencia",
+  "proyectos": [
+    {"titulo": "Servidor casero", "desc": "nginx + certificados, usuarios y permisos"},
+    {"titulo": "Scripts de mantenimiento", "desc": "rotación de logs, limpieza y alertas básicas"}
+  ]
+}

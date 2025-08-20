@@ -1,0 +1,41 @@
+{
+  "nombre": "María Gómez",
+  "titulo": "DevOps Engineer Junior",
+  "acerca_de": "Ingeniera de Computadores orientada a automatización de despliegues y pipelines CI/CD. Me motiva mejorar la eficiencia de equipos de desarrollo creando entornos reproducibles y observables.",
+  "resumen_bullets": [
+    "CI/CD básico con GitHub Actions/GitLab CI",
+    "Contenedores Docker y compose para entornos locales",
+    "Infraestructura como código inicial (Terraform básico)",
+    "Observabilidad básica (logs estructurados, métricas de app)"
+  ],
+  "experiencia": [
+    {
+      "empresa": "Equipo Universitario",
+      "pais": "Sevilla",
+      "puesto": "DevOps Junior (proyecto fin de grado)",
+      "fecha": "2024",
+      "logros": [
+        "Pipeline CI para tests y build de imagen Docker",
+        "Despliegue reproducible con docker-compose",
+        "Dashboards iniciales de métricas de aplicación"
+      ]
+    }
+  ],
+  "educacion": [
+    {
+      "titulo": "Grado en Ingeniería de Computadores",
+      "centro": "US",
+      "fecha": "2020–2024",
+      "estado": ""
+    }
+  ],
+  "skills": ["CI/CD", "Docker", "docker-compose", "Git", "Terraform (básico)", "Linux", "YAML", "pytest"],
+  "idiomas": ["Español (Nativo)", "Inglés (B2)"],
+  "email": "maria.gomez@example.com",
+  "web": "github.com/mgomez-devops",
+  "ciudad": "Sevilla",
+  "proyectos": [
+    {"titulo": "Pipeline CI", "desc": "tests + build + push de imagen"},
+    {"titulo": "Infra mínima Terraform", "desc": "definición de red y VM (laboratorio)"}
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "nombre": "Nombre Apellidos",
+  "titulo": "Profesional IT (Ejemplo)",
+  "resumen_bullets": [
+    "Plantilla de CV de ejemplo para orientación",
+    "Sustituye con tu experiencia/estudios reales",
+    "Añade proyectos y enlaza a tu repositorio"
+  ],
+  "experiencia": [],
+  "educacion": [],
+  "skills": ["Git", "Linux", "Python"],
+  "idiomas": ["Español", "Inglés (B1)"],
+  "email": "ejemplo@mail.com",
+  "web": "",
+  "ciudad": "",
+  "proyectos": []
+}

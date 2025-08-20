@@ -1,0 +1,41 @@
+{
+  "nombre": "Ana Pérez",
+  "titulo": "Frontend Developer Junior",
+  "acerca_de": "Ingeniera de Computadores orientada a automatización de despliegues y pipelines CI/CD. Me motiva mejorar la eficiencia de equipos de desarrollo creando entornos reproducibles y observables.",
+  "resumen_bullets": [
+    "HTML5/CSS3/JS modernos sin frameworks pesados",
+    "Buenas prácticas de accesibilidad y semántica",
+    "Consumo de APIs y manejo de estado básico",
+    "Testing de UI básico"
+  ],
+  "experiencia": [
+    {
+      "empresa": "Proyecto personal",
+      "pais": "Remoto",
+      "puesto": "Frontend Dev",
+      "fecha": "2023–2024",
+      "logros": [
+        "SPA ligera con JS vanilla y fetch API",
+        "Componentes accesibles y responsive",
+        "Documentación y despliegue local"
+      ]
+    }
+  ],
+  "educacion": [
+    {
+      "titulo": "CFGS DAW",
+      "centro": "IES Europa",
+      "fecha": "2022–2024",
+      "estado": "Finalizado"
+    }
+  ],
+  "skills": ["HTML", "CSS", "JavaScript", "Accesibilidad", "Git"],
+  "idiomas": ["Español (Nativo)", "Inglés (B1-B2)"],
+  "email": "ana.perez@example.com",
+  "web": "github.com/anap-front",
+  "ciudad": "Barcelona",
+  "proyectos": [
+    {"titulo": "SPA Tareas", "desc": "lista de tareas con localStorage"},
+    {"titulo": "Galería accesible", "desc": "navegación por teclado y ARIA"}
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "nombre": "Laura Martínez",
+  "titulo": "Backend Developer Junior",
+  "resumen_bullets": [
+    "Bases sólidas en Python (APIs REST, pruebas unitarias)",
+    "Experiencia con Django/Flask y ORMs (Django ORM, SQLAlchemy)",
+    "Modelado y consultas en PostgreSQL/MySQL",
+    "Git, entornos virtuales y control de versiones orientado a equipos"
+  ],
+  "experiencia": [
+    {
+      "empresa": "Startup X",
+      "pais": "Madrid",
+      "puesto": "Backend Intern",
+      "fecha": "2024",
+      "logros": [
+        "Implementé endpoints REST para el módulo de facturación (Flask)",
+        "Reduje tiempos de respuesta en un 30% optimizando queries",
+        "Escribí tests unitarios y de integración (pytest)"
+      ]
+    },
+    {
+      "empresa": "Proyecto personal",
+      "pais": "Remoto",
+      "puesto": "Backend Developer",
+      "fecha": "2023-2024",
+      "logros": [
+        "API REST de tareas con autenticación JWT (Django + DRF)",
+        "Despliegue local reproducible con scripts y documentación",
+        "Integración de logging estructurado y validación con pydantic"
+      ]
+    }
+  ],
+  "educacion": [
+    {
+      "titulo": "Grado en Ingeniería Informática",
+      "centro": "Universidad Complutense de Madrid",
+      "fecha": "2020–2024",
+      "estado": ""
+    }
+  ],
+  "skills": ["Python", "Flask", "Django", "DRF", "PostgreSQL", "MySQL", "Git", "pytest", "Docker básico"],
+  "idiomas": ["Español (Nativo)", "Inglés (B2)"],
+  "email": "laura.martinez@example.com",
+  "web": "github.com/lauram-dev",
+  "ciudad": "Madrid",
+  "proyectos": [
+    {"titulo": "API Tareas", "desc": "CRUD completo, JWT, documentación OpenAPI"},
+    {"titulo": "ETL Mini", "desc": "Extracción CSV, limpieza y carga a PostgreSQL"}
+  ]
+}

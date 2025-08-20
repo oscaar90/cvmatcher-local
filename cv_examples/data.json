@@ -1,0 +1,41 @@
+{
+  "nombre": "Javier Ortega",
+  "titulo": "Data Analyst / Jr. Data Engineer",
+  "acerca_de": "Ingeniera de Computadores orientada a automatización de despliegues y pipelines CI/CD. Me motiva mejorar la eficiencia de equipos de desarrollo creando entornos reproducibles y observables.",
+  "resumen_bullets": [
+    "Python para análisis (pandas, numpy, matplotlib)",
+    "SQL intermedio (joins, ventanas, agregaciones)",
+    "Limpieza de datos y validación",
+    "ETL simple y reporting"
+  ],
+  "experiencia": [
+    {
+      "empresa": "Proyecto Personal",
+      "pais": "Remoto",
+      "puesto": "Data Analyst",
+      "fecha": "2023–2024",
+      "logros": [
+        "Análisis de dataset público (ventas) y reporting mensual",
+        "ETL de ficheros CSV a SQLite con validaciones",
+        "Gráficos y dashboards con matplotlib"
+      ]
+    }
+  ],
+  "educacion": [
+    {
+      "titulo": "Grado en Matemáticas",
+      "centro": "UAM",
+      "fecha": "2019–2023",
+      "estado": ""
+    }
+  ],
+  "skills": ["Python", "pandas", "SQL", "SQLite", "matplotlib", "ETL", "Git"],
+  "idiomas": ["Español (Nativo)", "Inglés (B2)"],
+  "email": "javier.ortega@example.com",
+  "web": "github.com/jortega-data",
+  "ciudad": "Madrid",
+  "proyectos": [
+    {"titulo": "ETL Ventas", "desc": "pipeline CSV → SQLite + validación"},
+    {"titulo": "Reporting mensual", "desc": "KPIs y visualizaciones"}
+  ]
+}

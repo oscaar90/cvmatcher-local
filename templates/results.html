@@ -1,0 +1,544 @@
+{% extends "base.html" %}
+
+{% block title %}Resultados - CVMatcher{% endblock %}
+
+{% block content %}
+<div class="row">
+  <!-- IZQUIERDA: Resumen + Recomendaciones + Prioridades -->
+  <div class="col-lg-8">
+
+    <!-- Resumen Ejecutivo -->
+    <div class="card mb-4">
+      <div class="card-header d-flex justify-content-between align-items-center bg-dark text-white">
+        <h4 class="mb-0">
+          <i class="fas fa-file-alt text-primary"></i> {{ filename }}
+        </h4>
+        <span class="badge bg-primary">Analizado</span>
+      </div>
+
+      <div class="card-body">
+        <h5 class="mb-2">{{ ui.headline.especializacion }} · {{ ui.headline.anios_total }} años</h5>
+
+        {% if ui.headline.fit_badge %}
+          <span class="badge bg-success">{{ ui.headline.fit_badge }}</span>
+        {% endif %}
+
+        {% if ui.headline.top_roles and ui.headline.top_roles|length > 0 %}
+          <div class="mt-2 mb-2 d-flex align-items-center gap-2 flex-nowrap overflow-auto text-nowrap" style="max-width:100%;">
+            <strong class="me-1 flex-shrink-0">Top roles:</strong>
+            <div class="d-inline-flex align-items-center gap-2 flex-nowrap">
+              {% for r in ui.headline.top_roles %}
+                <span class="badge bg-primary">{{ r }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+
+        {% if ui.headline.fortalezas and ui.headline.fortalezas|length > 0 %}
+          <div class="mb-3 d-flex align-items-center gap-2 flex-nowrap overflow-auto text-nowrap" style="max-width:100%;">
+            <strong class="me-1 flex-shrink-0">Fortalezas:</strong>
+            <div class="d-inline-flex align-items-center gap-2 flex-nowrap">
+              {% for s in ui.headline.fortalezas %}
+                <span class="badge bg-primary">{{ s }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+
+        <strong>RRHH:</strong>
+        <div class="alert alert-{{ 'success' if ui.balance.label == 'EXCELENTE' else 'info' }} mt-1 mb-0">
+          {{ ui.balance.mensaje }}
+        </div>
+
+        {% if example_used %}
+          <div style="background:#fff3cd;border:1px solid #ffe69c;color:#7a5d00;padding:8px 12px;border-radius:6px;margin-top:8px;margin-bottom:8px;font-size:11.5px;">
+            Este es un <strong>CV de ejemplo</strong> para el rol <em>{{ role }}</em>.
+            Sube tu CV o vuelve atrás para generar la versión adaptada (beta).
+          </div>
+        {% endif %}
+
+        {# ==== Generar CV por rol (con fallback) ==== #}
+        {% set roles_map = (ui.headline.roles_pct if (ui.headline and ui.headline.roles_pct) else None) %}
+        {% set have_roles = (roles_map and roles_map|length > 0) or (roles_recomendados and roles_recomendados|length > 0) %}
+
+        {% if have_roles %}
+          <hr class="my-3">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <strong>Generar CV por rol</strong>
+            <small class="text-muted">Local • sin subida de datos • PDF con metadatos técnicos</small>
+          </div>
+
+          {% if roles_map %}
+            {# Camino 1: tenemos ui.headline.roles_pct #}
+            {% for role, pct in roles_map.items() %}
+              <div class="mb-2">
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                  <div class="me-3 mb-2">
+                    <div class="fw-semibold">{{ role }}</div>
+                    <div class="progress" style="height:6px; width:240px;">
+                      <div class="progress-bar bg-success"
+                           role="progressbar"
+                           aria-valuenow="{{ pct }}" aria-valuemin="0" aria-valuemax="100"
+                           style="width: {{ pct }}%;"></div>
+                    </div>
+                    <small class="text-muted">{{ pct }}% de encaje</small>
+                  </div>
+                  <a class="btn btn-outline-dark btn-sm"
+                     href="{{ url_for('cv_html', role=role|slug) }}"
+                     target="_blank">Ver {{ role }}</a>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            {# Camino 2 (fallback): usar roles_recomendados #}
+            {% for r in roles_recomendados %}
+              {% set name = (r.role if r is mapping else r) %}
+              {% set pct = (r.fit_percent if (r is mapping and r.fit_percent is not none) else 50) %}
+              <div class="mb-2">
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                  <div class="me-3 mb-2">
+                    <div class="fw-semibold">{{ name }}</div>
+                    <div class="progress" style="height:6px; width:240px;">
+                      <div class="progress-bar"
+                           role="progressbar"
+                           aria-valuenow="{{ pct }}" aria-valuemin="0" aria-valuemax="100"
+                           style="width: {{ pct }}%;"></div>
+                    </div>
+                    <small class="text-muted">{{ pct }}% de encaje</small>
+                  </div>
+                  <a class="btn btn-outline-dark btn-sm"
+                     href="{{ url_for('cv_html', role=name|slug) }}"
+                     target="_blank">Ver {{ name }}</a>
+                </div>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Recomendaciones IA (compacto) -->
+    <div class="card mb-4">
+      <div class="card-header d-flex justify-content-between align-items-center bg-info text-white">
+        <span><i class="fas fa-lightbulb"></i> Recomendaciones IA / enfocado a RRHH/ATS</span>
+      </div>
+      <div class="card-body">
+        <!-- Fortalezas -->
+        <div class="mb-3">
+          <div class="fw-bold mb-2">Fortalezas (top 3)</div>
+          <ul class="mb-2">
+            {% for f in (feedback.fortalezas or [])[:3] %}
+              <li>{{ f }}</li>
+            {% endfor %}
+          </ul>
+          {% if (feedback.fortalezas or [])|length > 3 %}
+          <details>
+            <summary class="text-muted">Ver {{ (feedback.fortalezas|length - 3) }} más</summary>
+            <ul class="mt-2">
+              {% for f in (feedback.fortalezas or [])[3:] %}
+                <li>{{ f }}</li>
+              {% endfor %}
+            </ul>
+          </details>
+          {% endif %}
+        </div>
+
+        <!-- Mejoras -->
+        <div class="mb-3">
+          <div class="fw-bold mb-2">Mejoras (top 2)</div>
+          <ul class="mb-2">
+            {% for m in (feedback.mejoras or [])[:2] %}
+              <li>{{ m }}</li>
+            {% endfor %}
+          </ul>
+          {% if (feedback.mejoras or [])|length > 2 %}
+          <details>
+            <summary class="text-muted">Ver {{ (feedback.mejoras|length - 2) }} más</summary>
+            <ul class="mt-2">
+              {% for m in (feedback.mejoras or [])[2:] %}
+                <li>{{ m }}</li>
+              {% endfor %}
+            </ul>
+          </details>
+          {% endif %}
+        </div>
+
+        <!-- Keywords ATS -->
+        {% set kws = (feedback.keywords_ats or [])[:12] %}
+        <div class="mb-2 d-flex align-items-center justify-content-between">
+          <div class="fw-bold">Keywords ATS ({{ kws|length }})</div>
+          <button type="button" class="btn btn-sm btn-outline-secondary" id="copy-kws">Copiar</button>
+        </div>
+        <div id="kws-wrap">
+          {% for k in kws %}
+            <span class="badge bg-light text-dark border me-1 mb-1">{{ k }}</span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparador de ofertas -->
+    <div class="card mb-4">
+      <div class="card-header d-flex justify-content-between align-items-center bg-dark text-white">
+        <span><i class="fas fa-briefcase me-2"></i>Comparador de ofertas</span>
+        <div class="d-flex align-items-center gap-2">
+          <span id="mode-badge" class="badge bg-secondary d-none">LLM</span>
+          <small class="text-muted">Local • sin subir datos</small>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="mb-2">
+          <label for="jd-text" class="form-label">Pega aquí la oferta (título + requisitos/funciones)</label>
+          <textarea id="jd-text" class="form-control" rows="8" placeholder="Puesto: ...
+Requisitos:
+- ...
+Funciones:
+- ..."></textarea>
+        </div>
+
+        <div class="d-flex gap-2 mb-3">
+          <button id="btn-compare" type="button" class="btn btn-primary">Comparar contra mi CV</button>
+          <button id="btn-clear"   type="button" class="btn btn-outline-secondary">Limpiar</button>
+        </div>
+
+        <div id="offer-error" class="alert alert-danger d-none"></div>
+
+        <div id="offer-result" class="d-none">
+          <!-- Encaje (porcentaje grande) -->
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <small class="text-uppercase text-muted fw-semibold">Encaje</small>
+            <span id="offer-fitbig" class="fs-5 fw-bold"></span>
+          </div>
+          <div class="progress mb-3" style="height:6px;">
+            <div id="offer-fitbar" class="progress-bar" style="width:0%;"></div>
+          </div>
+
+          <!-- BLOQUE DE SKILLS: se oculta cuando llegan vacías (modo LLM) -->
+          <div id="skills-block" class="row mt-1 d-none">
+            <div class="col-md-6">
+              <div class="fw-semibold mb-1">Core (imprescindibles) en tu CV</div>
+              <div id="core-match" class="mb-2"></div>
+              <div class="fw-semibold mb-1">Core que faltan</div>
+              <div id="core-missing" class="mb-2"></div>
+            </div>
+            <div class="col-md-6">
+              <div class="fw-semibold mb-1">Periféricas en tu CV</div>
+              <div id="per-match" class="mb-2"></div>
+              <div class="fw-semibold mb-1">Periféricas que faltan</div>
+              <div id="per-missing" class="mb-2"></div>
+            </div>
+          </div>
+
+          <!-- Análisis breve mejorado -->
+          <div class="mt-3 p-3 rounded border bg-light">
+            <div class="d-flex align-items-center mb-2">
+              <i class="fas fa-clipboard-check me-2"></i>
+              <div class="fw-semibold">Análisis breve</div>
+            </div>
+            <div id="offer-analysis" class="text-muted"></div>
+          </div>
+
+          <!-- Consejos como list-group -->
+          <div class="mt-3">
+            <div class="d-flex align-items-center mb-2">
+              <i class="fas fa-list-check me-2"></i>
+              <div class="fw-semibold">Consejos</div>
+            </div>
+            <ul id="offer-tips" class="list-group"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Prioridades inmediatas -->
+    <div class="card border-info mb-4">
+      <div class="card-header bg-info text-white d-flex align-items-center">
+        <i class="fas fa-rocket me-2"></i> Prioridades inmediatas
+      </div>
+      <div class="card-body p-3">
+        <div class="mt-0 mb-2 small text-muted">
+          <strong>📌 Leyenda:</strong> Impacto = beneficio esperado (alto, medio, bajo).
+          ETA = días estimados para implementarlo.
+        </div>
+
+        {% if acciones_prioritarias %}
+          <ul class="list-unstyled m-0">
+            {% for a in acciones_prioritarias %}
+              <li class="mb-3">
+                <div class="d-flex align-items-start">
+                  <input type="checkbox" class="form-check-input me-2 mt-1" disabled>
+                  <div>
+                    <div class="fw-semibold">{{ a.accion }}</div>
+                    <div class="text-muted small">— {{ a.impacto }}</div>
+                    {% if a.evidencia %}<div class="small text-secondary">evidencia: {{ a.evidencia }}</div>{% endif %}
+                    <div class="mt-1">
+                      <span class="badge bg-secondary me-1">{{ a.esfuerzo }}</span>
+                      <span class="badge bg-dark">ETA {{ a.eta_dias }}d</span>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <div class="text-muted">Sin acciones detectadas.</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- DERECHA: Sidebar por niveles (pegajoso) -->
+  <div class="col-lg-4">
+    <div class="position-sticky sticky-top" style="top:16px;">
+
+      <!-- Filtro global -->
+      <div class="card mb-3">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span>Skills por nivel</span>
+          <input id="skill-filter" class="form-control form-control-sm w-auto" placeholder="filtrar…" />
+        </div>
+      </div>
+
+      {% set LEVEL_BADGE = {
+        'EXPERTO':   'bg-dark text-white',
+        'AVANZADO':  'bg-primary',
+        'INTERMEDIO':'bg-success',
+        'JUNIOR':    'bg-warning text-dark'
+      } %}
+
+      {% for lvl, arr in ui.skills_levels.items() %}
+        {% if arr and arr|length > 0 %}
+        <div class="card mb-3 skill-level" data-level="{{ lvl }}">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <span class="text-uppercase">{{ lvl }} <span class="text-muted">({{ arr|length }})</span></span>
+            <button class="btn btn-sm btn-outline-secondary copy-skill" data-target="#list-{{ loop.index }}">Copiar</button>
+          </div>
+          <div class="card-body">
+            <div id="list-{{ loop.index }}" class="skills-wrap">
+              {% set show = 10 %}
+              {% for s in arr[:show] %}
+                <span class="badge {{ LEVEL_BADGE.get(lvl,'bg-secondary') }} me-1 mb-1 skill">{{ s }}</span>
+              {% endfor %}
+              {% if arr|length > show %}
+                <span class="badge bg-light text-dark">+{{ arr|length - show }} más</span>
+                <details class="mt-2">
+                  <summary class="text-muted small">Ver todo</summary>
+                  <div class="mt-2">
+                    {% for s in arr[show:] %}
+                      <span class="badge {{ LEVEL_BADGE.get(lvl,'bg-secondary') }} me-1 mb-1 skill">{{ s }}</span>
+                    {% endfor %}
+                  </div>
+                </details>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
+
+      <!-- Todas las skills (resumen completo) -->
+      <div class="card mb-3">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span>Todas las skills detectadas ({{ ui.full_skills|length }})</span>
+          <button id="copy-all-skills" class="btn btn-sm btn-outline-secondary">Copiar</button>
+        </div>
+        <div class="card-body">
+          <details>
+            <summary class="text-muted">Ver listado</summary>
+            <div id="all-skills" class="mt-2">
+              {% for s in ui.full_skills %}
+                <span class="badge bg-light text-dark border me-1 mb-1 skill">{{ s }}</span>
+              {% endfor %}
+            </div>
+          </details>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // Copiar keywords ATS
+  document.getElementById('copy-kws')?.addEventListener('click', ()=>{
+    const txt = Array.from(document.querySelectorAll('#kws-wrap .badge'))
+      .map(b=>b.textContent.trim()).join(', ');
+    navigator.clipboard.writeText(txt).then(()=>{
+      const btn = document.getElementById('copy-kws');
+      const old = btn.textContent;
+      btn.textContent = 'Copiado';
+      setTimeout(()=>btn.textContent = old, 1200);
+    });
+  });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const elJD      = document.getElementById('jd-text');
+  const btnCompare= document.getElementById('btn-compare');
+  const btnClear  = document.getElementById('btn-clear');
+
+  const boxErr = document.getElementById('offer-error');
+  const boxRes = document.getElementById('offer-result');
+
+  const elFitBar  = document.getElementById('offer-fitbar');
+  const elFitBig  = document.getElementById('offer-fitbig');
+
+  const elCoreOk   = document.getElementById('core-match');
+  const elCoreMiss = document.getElementById('core-missing');
+  const elPerOk    = document.getElementById('per-match');
+  const elPerMiss  = document.getElementById('per-missing');
+  const skillsBlk  = document.getElementById('skills-block');
+
+  const elAnal   = document.getElementById('offer-analysis');
+  const elTips   = document.getElementById('offer-tips');
+  const modeBadge= document.getElementById('mode-badge');
+
+  function badgelist(arr, color='secondary'){
+    if(!arr || !arr.length) return '<span class="text-muted">—</span>';
+    return arr.map(x=>`<span class="badge bg-${color} me-1 mb-1">${x}</span>`).join(' ');
+  }
+
+  function showError(msg){
+    boxErr.classList.remove('d-none');
+    boxErr.textContent = msg || 'Error desconocido.';
+    boxRes.classList.add('d-none');
+  }
+
+  function renderResult(data){
+    boxErr.classList.add('d-none');
+    boxRes.classList.remove('d-none');
+
+    const fit = Math.max(0, Math.min(100, parseInt(data.fit_percent || 0)));
+    elFitBar.style.width = fit + '%';
+    elFitBar.className = 'progress-bar ' + (fit>=75 ? 'bg-success' : fit>=50 ? 'bg-warning' : 'bg-danger');
+    elFitBig.textContent  = fit + '%';
+
+    // Mostrar/ocultar bloque de skills según contenido
+    const S = data.skills || {};
+    const hasSkills =
+      (S.core_match && S.core_match.length) ||
+      (S.core_faltan && S.core_faltan.length) ||
+      (S.perifericas_match && S.perifericas_match.length) ||
+      (S.perifericas_faltan && S.perifericas_faltan.length);
+
+    if (hasSkills){
+      skillsBlk.classList.remove('d-none');
+      elCoreOk.innerHTML   = badgelist(S.core_match, 'success');
+      elCoreMiss.innerHTML = badgelist(S.core_faltan, 'danger');
+      elPerOk.innerHTML    = badgelist(S.perifericas_match, 'info');
+      elPerMiss.innerHTML  = badgelist(S.perifericas_faltan, 'light');
+      modeBadge.classList.add('d-none'); // modo skills
+    } else {
+      skillsBlk.classList.add('d-none'); // modo LLM
+      modeBadge.classList.remove('d-none');
+      modeBadge.textContent = 'LLM';
+    }
+
+    // Análisis
+    elAnal.textContent = data.analisis || '—';
+
+    // Consejos → list-group
+    const tips = (data.consejos || []).map(c=>String(c).trim()).filter(Boolean);
+    if (tips.length === 0){
+      elTips.innerHTML = '<li class="list-group-item text-muted">—</li>';
+    } else {
+      elTips.innerHTML = tips.map(t => `
+        <li class="list-group-item d-flex align-items-start">
+          <i class="fas fa-check-circle me-2 mt-1"></i>
+          <span>${t}</span>
+        </li>`).join('');
+    }
+  }
+
+  btnClear?.addEventListener('click', ()=>{
+    elJD.value = '';
+    boxErr.classList.add('d-none');
+    boxRes.classList.add('d-none');
+  });
+
+  btnCompare?.addEventListener('click', async ()=>{
+    const txt = (elJD.value || '').trim();
+    if(!txt){ showError('Pega la oferta en el cuadro de texto.'); return; }
+
+    btnCompare.disabled = true;
+    const old = btnCompare.textContent;
+    btnCompare.textContent = 'Comparando…';
+
+    try{
+      const r = await fetch('/offer/compare', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ jd_text: txt })
+      });
+      const ct = r.headers.get('content-type') || '';
+      if(!r.ok){
+        const payload = ct.includes('application/json') ? await r.json().catch(()=>({}))
+                                                        : {error: await r.text().catch(()=> 'Error desconocido')};
+        showError(payload.error || 'Error en el análisis.');
+      }else{
+        const data = await r.json();
+        renderResult(data);
+      }
+    }catch(e){
+      showError('Error de red realizando la comparación.');
+    }finally{
+      btnCompare.disabled = false;
+      btnCompare.textContent = old;
+    }
+  });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const q = document.getElementById('skill-filter');
+
+  function badgesText(container){
+    return Array.from(container.querySelectorAll('.skill'))
+      .map(b => b.textContent.trim());
+  }
+
+  // Filtro global por texto (afecta niveles y listado completo)
+  q?.addEventListener('input', ()=>{
+    const term = (q.value || '').trim().toLowerCase();
+
+    document.querySelectorAll('.skills-wrap, #all-skills').forEach(box=>{
+      Array.from(box.querySelectorAll('.skill')).forEach(b=>{
+        const hit = b.textContent.toLowerCase().includes(term);
+        b.style.display = hit ? '' : 'none';
+      });
+    });
+  });
+
+  // Copiar por nivel
+  document.querySelectorAll('.copy-skill').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const id = btn.getAttribute('data-target');
+      const box = document.querySelector(id);
+      if(!box) return;
+      const txt = badgesText(box).join(', ');
+      navigator.clipboard.writeText(txt).then(()=>{
+        const old = btn.textContent;
+        btn.textContent = 'Copiado';
+        setTimeout(()=> btn.textContent = old, 1200);
+      });
+    });
+  });
+
+  // Copiar todas
+  document.getElementById('copy-all-skills')?.addEventListener('click', ()=>{
+    const box = document.getElementById('all-skills');
+    const txt = badgesText(box).join(', ');
+    navigator.clipboard.writeText(txt).then(()=>{
+      const btn = document.getElementById('copy-all-skills');
+      const old = btn.textContent;
+      btn.textContent = 'Copiado';
+      setTimeout(()=> btn.textContent = old, 1200);
+    });
+  });
+});
+</script>
+{% endblock %}

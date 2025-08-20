@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}CVMatcher - Analiza tu CV{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header text-center py-4">
+                <h1 class="mb-0">
+                    <i class="fas fa-search text-primary"></i> CVMatcher
+                </h1>
+                <p class="text-muted mt-2">Descubre tu verdadero potencial tech</p>
+            </div>
+            <div class="card-body p-5">
+                <div class="text-center mb-4">
+                    <h3>¿Listo para saber dónde eres realmente fuerte?</h3>
+                    <p class="text-muted">
+                        Sube tu CV y descubre tu especialización real, sin BS de RRHH.
+                        <br>
+                        <strong>Feedback directo, actionable y sin filtros.</strong>
+                    </p>
+                </div>
+
+                <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data" class="text-center">
+                    <div class="mb-4">
+                        <div class="d-inline-block position-relative">
+                            <input type="file" 
+                                   name="cv_file" 
+                                   id="cv_file" 
+                                   class="form-control" 
+                                   accept=".pdf,.docx,.txt" 
+                                   required
+                                   style="min-width: 300px;">
+                            <small class="form-text text-muted mt-2">
+                                Formatos: PDF, DOCX, TXT (máx. 16MB)
+                            </small>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg px-5 py-3">
+                        <i class="fas fa-rocket"></i> Analizar mi CV
+                    </button>
+                </form>
+
+                <div class="mt-5">
+                    <div class="row text-center">
+                        <div class="col-md-4 mb-3">
+                            <div class="h4">
+                                <i class="fas fa-bullseye text-primary"></i>
+                            </div>
+                            <h6>Especialización Real</h6>
+                            <small class="text-muted">Identifica tu verdadera fortaleza tech</small>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="h4">
+                                <i class="fas fa-chart-line text-success"></i>
+                            </div>
+                            <h6>Skills Reales</h6>
+                            <small class="text-muted">Años de experiencia sin mentiras</small>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="h4">
+                                <i class="fas fa-fire text-danger"></i>
+                            </div>
+                            <h6>Feedback Sin Filtros</h6>
+                            <small class="text-muted">Directo, actionable, motivacional</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <small class="text-light">
+                <i class="fas fa-robot"></i> Powered by Ollama + Mistral
+                <span class="mx-2">|</span>
+                <a href="/test-ollama" class="text-light">Test Conexión</a>
+            </small>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,1 +1,0 @@
-Buscamos un perfil técnico con experiencia en administración de sistemas, automatización con Terraform o Ansible, y conocimientos en plataformas cloud como AWS, Azure o GCP.

@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>CV — {{ data.nombre }} — {{ role }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    /* Simulación A4 con márgenes similares al PDF base */
+    :root {
+      --page-w: 210mm;    /* A4 */
+      --page-h: 297mm;    /* A4 */
+      --m: 16mm;          /* márgenes */
+      --fg: #111;
+      --muted: #666;
+      --accent: #000;     /* títulos/secciones */
+      --line: #ddd;
+      --chip-bg: #eee;
+    }
+    html, body { background:#f5f6f7; color:var(--fg); }
+    body { margin:0; padding:24px; font: 12px/1.45 "Inter", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"; }
+    .page {
+      width: var(--page-w);
+      min-height: var(--page-h);
+      margin: 0 auto;
+      background: #fff;
+      box-shadow: 0 1px 6px rgba(0,0,0,.08);
+      position: relative;
+      box-sizing: border-box;
+      padding: var(--m);
+    }
+    .hdr {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 10mm;
+    }
+    .name { font-weight: 700; font-size: 22px; letter-spacing: .2px; }
+    .title { color: var(--muted); font-size: 13px; margin-top: 4px; }
+    .contact { text-align: right; font-size: 10.5px; color: var(--fg); }
+    .contact div { margin-bottom: 2px; }
+
+    h2.sec { 
+      font-size: 13.5px; 
+      margin: 10mm 0 4mm; 
+      color: var(--accent); 
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 2mm;
+      letter-spacing: .2px;
+    }
+    ul.compact { margin: 0; padding-left: 16px; }
+    ul.compact > li { margin: 3px 0; }
+
+    .exp-item { margin-bottom: 5mm; }
+    .exp-head { font-weight: 600; }
+    .exp-meta { color: var(--muted); font-size: 11px; margin-top: 1mm; }
+
+    .edu-item { margin-bottom: 2mm; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip { background: var(--chip-bg); border: 1px solid #e5e5e5; border-radius: 6px; padding: 2px 6px; font-size: 10.5px; }
+    .languages { font-size: 12px; }
+
+    /* Evitar salto de elementos clave al imprimir/PDF */
+    .avoid-break { break-inside: avoid; page-break-inside: avoid; }
+
+    @media print {
+      body { background: transparent; padding: 0; }
+      .page { box-shadow: none; margin: 0; }
+      a { color: inherit; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <!-- Cabecera -->
+    <header class="hdr">
+      <div>
+        <div class="name">{{ data.nombre }}</div>
+        <div class="title">{{ data.titulo }}</div>
+      </div>
+      <div class="contact">
+        {% if data.web %}<div>{{ data.web }}</div>{% endif %}
+        {% if data.email %}<div>{{ data.email }}</div>{% endif %}
+        {% if data.ciudad %}<div>{{ data.ciudad }}</div>{% endif %}
+      </div>
+    </header>
+    {% if data.acerca_de %}
+  <h2 class="sec">Perfil</h2>
+  <section class="avoid-break">
+    <p style="margin:0">{{ data.acerca_de }}</p>
+  </section>
+{% endif %}
+    <!-- Aviso de ejemplo (si procede) -->
+    {% if example_used %}
+      <div style="background:#fff3cd;border:1px solid #ffe69c;color:#7a5d00;padding:8px 12px;border-radius:6px;margin-bottom:8mm;font-size:11.5px;">
+        Este es un <strong>CV de ejemplo</strong> para el rol <em>{{ role }}</em>. 
+        Sube tu CV para generar tu versión adaptada (beta).
+      </div>
+    {% endif %}
+
+<!-- Fortalezas / Resumen -->
+{% if data.resumen_bullets and data.resumen_bullets|length > 0 %}
+  <h2 class="sec">{{ data.resumen_title or "Fortalezas clave" }}</h2>
+  <section class="avoid-break">
+    <ul class="compact">
+      {% for b in data.resumen_bullets %}
+        <li>{{ b }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endif %}
+
+    <!-- Experiencia -->
+    {% if data.experiencia and data.experiencia|length > 0 %}
+      <h2 class="sec">Experiencia Laboral</h2>
+      <section>
+        {% for e in data.experiencia %}
+          <article class="exp-item avoid-break">
+            <div class="exp-head">
+              {{ ([e.empresa, e.pais, e.puesto] 
+                  | reject('equalto', None) 
+                  | reject('equalto', '')) | join(' — ') }}
+            </div>
+            {% if e.fecha %}
+              <div class="exp-meta">{{ e.fecha }}</div>
+            {% endif %}
+            {% if e.logros and e.logros|length > 0 %}
+              <ul class="compact">
+                {% for l in e.logros %}
+                  <li>{{ l }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </article>
+        {% endfor %}
+      </section>
+    {% endif %}
+
+    <!-- Educación -->
+    {% if data.educacion and data.educacion|length > 0 %}
+      <h2 class="sec">Educación</h2>
+      <section class="avoid-break">
+        {% for ed in data.educacion %}
+          <div class="edu-item">
+            {{ ([ed.titulo, ed.centro, ed.fecha, ed.estado] 
+                | reject('equalto', None) 
+                | reject('equalto', '')) | join(' | ') }}
+          </div>
+        {% endfor %}
+      </section>
+    {% endif %}
+
+    <!-- Habilidades -->
+    {% if data.skills and data.skills|length > 0 %}
+      <h2 class="sec">Habilidades</h2>
+      <section class="chips avoid-break">
+        {% for s in data.skills %}
+          <span class="chip">{{ s }}</span>
+        {% endfor %}
+      </section>
+    {% endif %}
+
+    <!-- Idiomas -->
+    {% if data.idiomas and data.idiomas|length > 0 %}
+      <h2 class="sec">Idiomas</h2>
+      <section class="languages avoid-break">
+        {{ data.idiomas | join(', ') }}
+      </section>
+    {% endif %}
+
+    <!-- Proyectos (opcional) -->
+    {% if data.proyectos and data.proyectos|length > 0 %}
+      <h2 class="sec">Proyectos clave</h2>
+      <section class="avoid-break">
+        <ul class="compact">
+          {% for p in data.proyectos %}
+            {% if p is mapping %}
+              <li>
+                {{ ([p.titulo, p.desc] 
+                    | reject('equalto', None) 
+                    | reject('equalto', '')) | join(' — ') }}
+              </li>
+            {% else %}
+              <li>{{ p }}</li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+  </main>
+</body>
+</html>
