@@ -44,8 +44,6 @@ git clone https://github.com/oscaar90/cvmatcher-local.git
 cd cvmatcher-local
 Ejecutar el análisis sobre un CV:
 
-
-python3 cvmetrics.py ./cv_examples/ejemplo_cv.pdf
 Ver resultados en consola o exportar a PDF/HTML.
 
 🧩 Roadmap
