@@ -81,7 +81,6 @@ Recomendaciones frente a procesos de selección.
 
 Opcional: compara tu CV contra una oferta pegando los requisitos para ver el encaje.
 
-<<<<<<< HEAD
 📸 Capturas
 Pantalla principal
 
@@ -90,7 +89,7 @@ Test de conexión con Ollama
 CV no relacionado con tecnología
 
 CV con perfil DevOps válido
-=======
+
 ## 📸 Capturas  
 
 ### Pantalla principal  
@@ -114,7 +113,6 @@ CV con perfil DevOps válido
 ### Generar CV Base
 ![Comparador](./screenshots/CVBASE.png)  
 
->>>>>>> 13a87cc (Añadidas capturas al README)
 
 Comparador de ofertas
 
