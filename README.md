@@ -65,7 +65,11 @@ Carga tu CV en PDF, DOCX o TXT (máx. 16 MB).
 
 La app analiza el documento y muestra:
 
+<<<<<<< HEAD
 Roles más vinculados.
+=======
+Roles más vinculados. Además la app permite generar un CV base adaptado a cada rol.
+>>>>>>> 13a87cc (Añadidas capturas al README)
 
 Fortalezas y mejoras.
 
@@ -77,6 +81,7 @@ Recomendaciones frente a procesos de selección.
 
 Opcional: compara tu CV contra una oferta pegando los requisitos para ver el encaje.
 
+<<<<<<< HEAD
 📸 Capturas
 Pantalla principal
 
@@ -85,6 +90,31 @@ Test de conexión con Ollama
 CV no relacionado con tecnología
 
 CV con perfil DevOps válido
+=======
+## 📸 Capturas  
+
+### Pantalla principal  
+![Pantalla principal](./screenshots/inicio.png)  
+
+### Test de conexión con Ollama  
+![Test conexión](./screenshots/test.png)  
+
+### CV no relacionado con tecnología  
+![CV no tech](./screenshots/error.png)  
+
+### CV con perfil DevOps válido  
+![CV DevOps](./screenshots/cv.png)  
+![CV DevOps2](./screenshots/cv2.png)  
+### Comparador de ofertas  
+![Comparador](./screenshots/comparador.png)  
+
+### Roles
+![Comparador](./screenshots/roles.png)  
+
+### Generar CV Base
+![Comparador](./screenshots/CVBASE.png)  
+
+>>>>>>> 13a87cc (Añadidas capturas al README)
 
 Comparador de ofertas
 
