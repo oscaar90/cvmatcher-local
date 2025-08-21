@@ -65,11 +65,10 @@ Carga tu CV en PDF, DOCX o TXT (máx. 16 MB).
 
 La app analiza el documento y muestra:
 
-<<<<<<< HEAD
+
 Roles más vinculados.
-=======
+
 Roles más vinculados. Además la app permite generar un CV base adaptado a cada rol.
->>>>>>> 13a87cc (Añadidas capturas al README)
 
 Fortalezas y mejoras.
 
