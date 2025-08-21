@@ -80,15 +80,6 @@ Recomendaciones frente a procesos de selección.
 
 Opcional: compara tu CV contra una oferta pegando los requisitos para ver el encaje.
 
-📸 Capturas
-Pantalla principal
-
-Test de conexión con Ollama
-
-CV no relacionado con tecnología
-
-CV con perfil DevOps válido
-
 ## 📸 Capturas  
 
 ### Pantalla principal  
