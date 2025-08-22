@@ -101,13 +101,18 @@ pip install -r requirements.txt
   * **CV base por rol** *(beta)*.
 
 ## Demostraciones
-* Pagina principal → ![Pantalla principal](./screenshots/inicio.png)  
-* Test de conexión con Ollama → ![Test](screenshots/test.png)
-* Rechazo no-tech → ![No tech](screenshots/error.png)
-* CV DevOps con roles/gaps → ![CV DevOps](screenshots/cv.png)
-* Comparador de ofertas → ![Comparador](screenshots/comparador.png)
-* Roles por encaje → ![Roles](screenshots/roles.png)
-* **CV base (beta)** → ![CV BASE](screenshots/CVBASE.png)
+* Test de conexión con Ollama →
+* ![Test](screenshots/test.png)
+* Rechazo no-tech →
+* ![No tech](screenshots/error.png)
+* CV DevOps con roles/gaps →
+*  ![CV DevOps](screenshots/cv.png)
+* Comparador de ofertas →
+* ![Comparador](screenshots/comparador.png)
+* Roles por encaje →
+* ![Roles](screenshots/roles.png)
+* **CV base (beta)** →
+* ![CV BASE](screenshots/CVBASE.png)
 
 ## Rendimiento
 
