@@ -102,17 +102,17 @@ pip install -r requirements.txt
 
 ## Demostraciones
 * Test de conexión con Ollama →
-* ![Test](screenshots/test.png)
+   ![Test](screenshots/test.png)
 * Rechazo no-tech →
-* ![No tech](screenshots/error.png)
+ ![No tech](screenshots/error.png)
 * CV DevOps con roles/gaps →
-*  ![CV DevOps](screenshots/cv.png)
+  ![CV DevOps](screenshots/cv.png)
 * Comparador de ofertas →
-* ![Comparador](screenshots/comparador.png)
+ ![Comparador](screenshots/comparador.png)
 * Roles por encaje →
-* ![Roles](screenshots/roles.png)
+ ![Roles](screenshots/roles.png)
 * **CV base (beta)** →
-* ![CV BASE](screenshots/CVBASE.png)
+ ![CV BASE](screenshots/CVBASE.png)
 
 ## Rendimiento
 
