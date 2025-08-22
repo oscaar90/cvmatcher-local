@@ -1,162 +1,165 @@
-# CVMatcher Local
+# CVMATCHER — IA local para auditar tu CV contra ofertas reales
 
-Analiza tu CV frente a ofertas reales usando **IA local**, sin depender de OpenAI ni enviar tus datos fuera.  
-Funciona 100% en local con **Ollama** y modelos ligeros como Mistral o LLaMA.  
+> Descubre tu encaje real para roles tech. 100% local, sin nube, sin humo.
+
+![Hero](screenshots/inicio.png)
+
+<p align="left">
+  <a href="https://img.shields.io/badge/python-3.10%2B-blue"> <img alt="Python" src="https://img.shields.io/badge/python-3.10%2B-blue"/> </a>
+  <a href="https://img.shields.io/badge/LLM-Ollama%20%7C%20Mistral-informational"> <img alt="Ollama" src="https://img.shields.io/badge/LLM-Ollama%20%7C%20Mistral-informational"/> </a>
+  <a href="https://img.shields.io/badge/Local-First-success"> <img alt="Local First" src="https://img.shields.io/badge/Local-First-success"/> </a>
+  <a href="#releases"> <img alt="Status" src="https://img.shields.io/badge/Release-V2-brightgreen"/> </a>
+</p>
 
 ---
 
-## 🚀 Características
-CVMATCHER V2
+## TL;DR
 
-CVMATCHER V2 es una aplicación local que analiza CVs (PDF, DOCX, TXT) y los contrasta con roles profesionales del sector tecnológico.
-El objetivo es detectar fortalezas reales, carencias y dar feedback claro sobre el encaje de un CV con diferentes posiciones.
+* Funciona **100% en local** con **Ollama** (probado con *mistral*).
+* Sube tu CV (PDF/DOCX/TXT), analiza y te da **roles afines, fortalezas, gaps y keywords ATS**.
+* **Corta** si el CV **no es tech** → no malgasta CPU ni tiempo.
+* **Promedio** por CV: **\~22–25s**.
 
-🚀 Instalación
+---
 
-Clona el repositorio:
+## Índice
+
+* [¿Por qué CVMATCHER?](#por-qué-cvmatcher)
+* [Características](#características)
+* [Requisitos](#requisitos)
+* [Instalación](#instalación)
+* [Inicio rápido](#inicio-rápido)
+* [Uso](#uso)
+* [Demostraciones](#demostraciones)
+* [Rendimiento](#rendimiento)
+* [Privacidad](#privacidad)
+* [Configuración avanzada](#configuración-avanzada)
+* [Roadmap](#roadmap)
+* [Contribuir](#contribuir)
+* [FAQ](#faq)
+
+---
+
+## ¿Por qué CVMATCHER?
+
+La mayoría de proyectos similares son SaaS, suben tus datos a la nube o te venden humo de ATS. **CVMATCHER** va directo al grano:
+
+* **Local-first**: tus CVs **no salen** de tu equipo.
+* **Feedback sin filtros**: si no hay evidencia técnica suficiente, lo dice.
+* **Productividad real**: orienta acciones (qué añadir, qué quitar, cómo priorizar).
+
+## Características
+
+* **Detección de roles** afines (p. ej., SRE, Platform/DevOps, Cloud Reliability, Automation…).
+* **Fortalezas, carencias y recomendaciones** claras para RRHH/ATS.
+* **Keywords ATS** extraídas y agrupadas.
+* **Comparador de ofertas**: pega una JD y calcula **encaje** con tu CV.
+* **Generación de CV base por rol** *(beta)*.
+* **Short-circuit no-tech**: si el CV no es tech, devuelve error y **no procesa**.
+* **100% local** con **Ollama** + modelos abiertos (Mistral, LLaMA, etc.).
+
+## Requisitos
+
+* **Python 3.10+**
+* **Ollama** en ejecución: `ollama serve`
+* Modelo LLM (ejemplo): `ollama pull mistral`
+
+## Instalación
 
 ```bash
 git clone https://github.com/oscaar90/cvmatcher-local.git
 cd cvmatcher-local
-```
-
-Crea un entorno virtual:
-
-```bash
 python3 -m venv venv
-source venv/bin/activate
-```
-
-Instala dependencias:
-
-```bash
+source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-Asegúrate de tener Ollama instalado y corriendo en tu equipo local:
+## Inicio rápido
 
-```bash
-ollama serve
-ollama pull mistral
-```
+1. Arranca Ollama y baja un modelo ligero:
 
-⚙️ Ejecución
+   ```bash
+   ollama serve &
+   ollama pull mistral
+   ```
+2. Lanza la app web:
 
-Inicia la aplicación web:
+   ```bash
+   python3 cvmetrics.py
+   ```
+3. Abre `http://127.0.0.1:5000` y sube tu CV.
 
-```bash
-python3 cvmetrics.py
-```
+## Uso
 
-Salida esperada:
+* **Entrada**: PDF, DOCX o TXT (≤16MB).
+* **Salida**:
 
-🚀 Iniciando CVMatcher...
-📊 Asegúrate de tener Ollama ejecutándose: ollama serve
-🤖 Modelo requerido: ollama pull mistral
- * Running on http://127.0.0.1:5000
+  * **Top roles** y **porcentaje de encaje**.
+  * **Fortalezas** y **gaps** priorizados (con foco RRHH/ATS).
+  * **Skills** detectadas por nivel + **keywords ATS**.
+  * **Comparador** CV ↔ oferta (pega requisitos/funciones).
+  * **CV base por rol** *(beta)*.
 
+## Demostraciones
 
-Abre en tu navegador:
-http://127.0.0.1:5000
+* Test de conexión con Ollama → ![Test](screenshots/test.png)
+* Pagina principal ![Pantalla principal](./screenshots/inicio.png)  
+* Rechazo no-tech → ![No tech](screenshots/error.png)
+* CV DevOps con roles/gaps → ![CV DevOps](screenshots/cv.png)
+* Comparador de ofertas → ![Comparador](screenshots/comparador.png)
+* Roles por encaje → ![Roles](screenshots/roles.png)
+* **CV base (beta)** → ![CV BASE](screenshots/CVBASE.png)
 
-🖥️ Uso
+## Rendimiento
 
-Carga tu CV en PDF, DOCX o TXT (máx. 16 MB).
+* **Tiempo medio por CV**: **22–25s** (antes 80–300s).
+* **Short-circuit** para CVs **no tech**: evita gasto de CPU/GPU.
 
-La app analiza el documento y muestra:
+## Privacidad
 
+* **No nube. No telemetría. No rastreo.**
+* Los archivos se **procesan en local** y se **eliminan** tras el análisis.
 
-Roles más vinculados.
+## Configuración avanzada
 
-Roles más vinculados. Además la app permite generar un CV base adaptado a cada rol.
+* **Modelo**: define `OLLAMA_MODEL` (ej. `mistral`, `llama3:8b`)
+* **Idioma UI**: ES por defecto.
+* **Límites**: ajusta tokens/temperatura del modelo en el código si lo necesitas.
 
-Fortalezas y mejoras.
+> Nota: no se generan CVs irreales. Si no hay **evidencia técnica**, se avisa y **no** se inventa nada.
 
-Skills detectadas con nivel.
+## Roadmap
 
-Keywords ATS extraídas.
+* Exportar reportes en **PDF/Markdown**.
+* UI/UX mejorada (filtros, accesos rápidos, temas).
+* Detección afinada para **AI/Platform Engineer**.
+* Selección dinámica de modelo en UI.
 
-Recomendaciones frente a procesos de selección.
+## Contribuir
 
-Opcional: compara tu CV contra una oferta pegando los requisitos para ver el encaje.
+Las **PRs** son bienvenidas. Si encuentras un bug, abre un **issue** y (si puedes) adjunta un **CV de prueba anonimizado**.
 
-## 📸 Capturas  
+### Guías rápidas
 
-### Pantalla principal  
-![Pantalla principal](./screenshots/inicio.png)  
+* Estilo: directo, sin adornos.
+* Mantén el **local-first** como principio de diseño.
+* Añade tests simples para parsers y prompts.
 
-### Test de conexión con Ollama  
-![Test conexión](./screenshots/test.png)  
+## FAQ
 
-### CV no relacionado con tecnología  
-![CV no tech](./screenshots/error.png)  
+**¿Funciona offline?** Sí.
 
-### CV con perfil DevOps válido  
-![CV DevOps](./screenshots/cv.png)  
-![CV DevOps2](./screenshots/cv2.png)  
-### Comparador de ofertas  
-![Comparador](./screenshots/comparador.png)  
+**¿Soporta otros modelos?** Sí, cualquier modelo que tengas en **Ollama** (ajusta `OLLAMA_MODEL`).
 
-### Roles
-![Comparador](./screenshots/roles.png)  
+**¿Reescribe mi CV?** No. Genera un **CV base por rol** (beta) y te da guía, pero **no inventa experiencia**.
 
-### Generar CV Base
-![Comparador](./screenshots/CVBASE.png)  
+**¿Qué formatos acepta?** PDF, DOCX, TXT.
 
+**¿Por qué a veces me dice “App solo TECH”?** Porque tu CV no muestra evidencias técnicas suficientes; está diseñado para **no perder tiempo** ni engañarte.
 
-Comparador de ofertas
+---
 
-🧪 Ejemplos de salida
-Caso 1 – CV no tech
+<p align="center">
+Hecho con 💻⚙️ por gente que **prefiere lo local** a las diapositivas de humo.
+</p>
 
-El sistema corta el proceso y devuelve:
-
-```javascript
-Error:
-App solo TECH
-```
-
-Caso 2 – CV DevOps válido
-
-Roles detectados: SRE, Cloud Reliability Engineer, DevOps Engineer, Automation Engineer.
-
-Skills sólidas: Python, Bash, Powershell, SQL, Grafana, InfluxDB.
-
-Recomendaciones claras para mejorar CV y keywords ATS extraídas.
-
-📊 Métricas de rendimiento
-
-Procesamiento medio por CV: 22–25 segundos (antes 80–300).
-
-Si detecta que no es un perfil tech, corta el análisis y no consume recursos innecesarios.
-
-🔒 Privacidad
-
-100% local.
-
-No se suben datos a ningún servidor externo.
-
-Los archivos se eliminan tras el análisis.
-
-🛠️ Roadmap
-
-Exportar reportes en PDF y Markdown.
-
-Interfaz web más avanzada.
-
-Ajustar detección para roles emergentes (AI Engineer, Platform Engineer, etc.).
-
-🤝 Contribuciones
-
-Pull requests y mejoras son bienvenidas.
-Si encuentras un bug, abre un issue y, si lo deseas, adjunta un CV de prueba anonimizado.
-
-💡 Nota: CVMATCHER no reescribe tu CV. Te muestra lo que realmente transmite frente a procesos de selección y si encaja con los roles a los que aplicas.
-- Extracción de skills y experiencia desde tu CV (PDF/DOCX).
-- Comparación contra descripciones de ofertas de empleo.
-- Detección automática de dominio técnico (**tech** vs **non-tech**).
-- Guardrails:
-  - Si el CV no aporta skills → **rechazo directo** con mensaje sarcástico.
-  - No se generan CVs falsos si no hay evidencia técnica.
-- Generación de informes en **PDF/HTML** con el detalle de encaje.
-- Ejecución **local** y privada (sin nube).
