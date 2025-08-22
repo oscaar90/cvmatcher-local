@@ -102,6 +102,7 @@ pip install -r requirements.txt
 
 ## Demostraciones
 * Test de conexión con Ollama →
+  
    ![Test](screenshots/test.png)
 * Rechazo no-tech →
  ![No tech](screenshots/error.png)
