@@ -105,6 +105,7 @@ pip install -r requirements.txt
   
    ![Test](screenshots/test.png)
 * Rechazo no-tech →
+  
  ![No tech](screenshots/error.png)
 * CV DevOps con roles/gaps →
   ![CV DevOps](screenshots/cv.png)
